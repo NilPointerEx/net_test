@@ -7,4 +7,5 @@ CMakeFiles/net_test.dir/test_main.o: test_endian.h
 CMakeFiles/net_test.dir/test_main.o: test_hostname.h
 CMakeFiles/net_test.dir/test_main.o: test_ip.h
 CMakeFiles/net_test.dir/test_main.o: test_main.cpp
+CMakeFiles/net_test.dir/test_main.o: test_tcp.h
 

@@ -2,6 +2,7 @@
 #include "test_ip.h"
 #include "test_hostname.h"
 #include "test_endian.h"
+#include "test_tcp.h"
 #include <string>
 #include <stdio.h>
 #include <map>
@@ -38,9 +39,10 @@ DECLARE_SINGLETON(NetTest);
 
 NetTest::NetTest()
 {
-	RegistTestFun("testip", TestIP::Test); 
-	RegistTestFun("testhostname", TestHostname::Test); 
-	RegistTestFun("testendian", TestEndian::Test); 
+	RegistTestFun("ip", TestIP::Test); 
+	RegistTestFun("hostname", TestHostname::Test); 
+	RegistTestFun("endian", TestEndian::Test); 
+	RegistTestFun("tcp", TestTcp::Test); 
 }
 
 NetTest::~NetTest()
