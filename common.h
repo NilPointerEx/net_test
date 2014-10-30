@@ -1,0 +1,19 @@
+#ifndef _COMMON_H_
+#define _COMMON_H_
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+#define DECLARE_SINGLETON(T)	\
+public:							\
+	static T* GetInstance()		\
+	{							\
+		static T instance_;		\
+		return &instance_;		\
+	}							\
+private:						\
+	T();						\
+	T(const T&);				\
+	T& operator=(const T&);		\
+	~T();						\
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#endif //#ifndef _COMMON_H_
