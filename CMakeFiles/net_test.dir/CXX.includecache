@@ -6,32 +6,12 @@
 
 #IncludeRegexTransform: 
 
-/home/zodiac/Projects/net/common.h
-
-/home/zodiac/Projects/net/net_test.h
-common.h
-/home/zodiac/Projects/net/common.h
-test_ip.h
-/home/zodiac/Projects/net/test_ip.h
-test_hostname.h
-/home/zodiac/Projects/net/test_hostname.h
-test_endian.h
-/home/zodiac/Projects/net/test_endian.h
+/home/zodiac/Projects/net/test_tcp.cpp
 test_tcp.h
 /home/zodiac/Projects/net/test_tcp.h
-string
--
 stdio.h
 -
-map
--
-
-/home/zodiac/Projects/net/test_endian.h
-stdio.h
--
-
-/home/zodiac/Projects/net/test_hostname.h
-stdio.h
+stdlib.h
 -
 sys/socket.h
 -
@@ -39,30 +19,8 @@ netinet/in.h
 -
 arpa/inet.h
 -
-netdb.h
+string.h
 -
-
-/home/zodiac/Projects/net/test_ip.h
-stdio.h
--
-sys/socket.h
--
-netinet/in.h
--
-arpa/inet.h
--
-
-/home/zodiac/Projects/net/test_main.cpp
-net_test.h
-/home/zodiac/Projects/net/net_test.h
 
 /home/zodiac/Projects/net/test_tcp.h
-stdio.h
--
-sys/socket.h
--
-netinet/in.h
--
-arpa/inet.h
--
 

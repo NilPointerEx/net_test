@@ -1,15 +1,9 @@
-#include <stdio.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
 class TestTcp
 {
 public:
-	static void Test(int argc, char ** argv)
-	{
-		printf("TestTcp::Test!\n");
-	}
+	static void Test(int argc, char ** argv);
 
 private:
+	static void BeginClien(int argc, char ** argv);
+	static void BeginServer(int argc, char ** argv);
 };

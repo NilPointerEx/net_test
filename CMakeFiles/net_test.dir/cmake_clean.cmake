@@ -1,5 +1,6 @@
 FILE(REMOVE_RECURSE
-  "CMakeFiles/net_test.dir/test_main.o"
+  "CMakeFiles/net_test.dir/test_main.cpp.o"
+  "CMakeFiles/net_test.dir/test_tcp.cpp.o"
   "net_test.pdb"
   "net_test"
 )

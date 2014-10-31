@@ -1,1 +1,1 @@
-/usr/local/bin/c++   -std=c++0x  -fPIC CMakeFiles/net_test.dir/test_main.o  -o net_test -rdynamic 
+g++   -std=c++0x    CMakeFiles/net_test.dir/test_main.cpp.o CMakeFiles/net_test.dir/test_tcp.cpp.o  -o net_test -rdynamic 
