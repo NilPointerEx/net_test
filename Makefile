@@ -42,10 +42,10 @@ EQUALS = =
 CMAKE_EDIT_COMMAND = /usr/bin/ccmake
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/zodiac/Projects/net
+CMAKE_SOURCE_DIR = /home/zodiac/git/net_test
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/zodiac/Projects/net
+CMAKE_BINARY_DIR = /home/zodiac/git/net_test
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -72,9 +72,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zodiac/Projects/net/CMakeFiles /home/zodiac/Projects/net/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zodiac/git/net_test/CMakeFiles /home/zodiac/git/net_test/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/zodiac/Projects/net/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zodiac/git/net_test/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -113,6 +113,30 @@ net_test: cmake_check_build_system
 net_test/fast:
 	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/build
 .PHONY : net_test/fast
+
+test_echo.o: test_echo.cpp.o
+.PHONY : test_echo.o
+
+# target to build an object file
+test_echo.cpp.o:
+	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_echo.cpp.o
+.PHONY : test_echo.cpp.o
+
+test_echo.i: test_echo.cpp.i
+.PHONY : test_echo.i
+
+# target to preprocess a source file
+test_echo.cpp.i:
+	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_echo.cpp.i
+.PHONY : test_echo.cpp.i
+
+test_echo.s: test_echo.cpp.s
+.PHONY : test_echo.s
+
+# target to generate assembly for a file
+test_echo.cpp.s:
+	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_echo.cpp.s
+.PHONY : test_echo.cpp.s
 
 test_main.o: test_main.cpp.o
 .PHONY : test_main.o
@@ -171,6 +195,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... net_test"
 	@echo "... rebuild_cache"
+	@echo "... test_echo.o"
+	@echo "... test_echo.i"
+	@echo "... test_echo.s"
 	@echo "... test_main.o"
 	@echo "... test_main.i"
 	@echo "... test_main.s"
