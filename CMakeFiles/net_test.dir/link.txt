@@ -1,0 +1,1 @@
+g++   -g -std=c++0x    CMakeFiles/net_test.dir/test_tcp.cpp.o CMakeFiles/net_test.dir/test_echo.cpp.o CMakeFiles/net_test.dir/test_main.cpp.o  -o net_test -rdynamic 
