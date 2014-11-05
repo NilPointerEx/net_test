@@ -5,8 +5,9 @@ SET(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
   "/home/zodiac/git/net_test/test_echo.cpp" "/home/zodiac/git/net_test/CMakeFiles/net_test.dir/test_echo.cpp.o"
+  "/home/zodiac/git/net_test/test_epoll.cpp" "/home/zodiac/git/net_test/CMakeFiles/net_test.dir/test_epoll.cpp.o"
   "/home/zodiac/git/net_test/test_main.cpp" "/home/zodiac/git/net_test/CMakeFiles/net_test.dir/test_main.cpp.o"
-  "/home/zodiac/git/net_test/test_tcp.cpp" "/home/zodiac/git/net_test/CMakeFiles/net_test.dir/test_tcp.cpp.o"
+  "/home/zodiac/git/net_test/test_poll.cpp" "/home/zodiac/git/net_test/CMakeFiles/net_test.dir/test_poll.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

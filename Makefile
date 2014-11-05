@@ -138,6 +138,30 @@ test_echo.cpp.s:
 	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_echo.cpp.s
 .PHONY : test_echo.cpp.s
 
+test_epoll.o: test_epoll.cpp.o
+.PHONY : test_epoll.o
+
+# target to build an object file
+test_epoll.cpp.o:
+	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_epoll.cpp.o
+.PHONY : test_epoll.cpp.o
+
+test_epoll.i: test_epoll.cpp.i
+.PHONY : test_epoll.i
+
+# target to preprocess a source file
+test_epoll.cpp.i:
+	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_epoll.cpp.i
+.PHONY : test_epoll.cpp.i
+
+test_epoll.s: test_epoll.cpp.s
+.PHONY : test_epoll.s
+
+# target to generate assembly for a file
+test_epoll.cpp.s:
+	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_epoll.cpp.s
+.PHONY : test_epoll.cpp.s
+
 test_main.o: test_main.cpp.o
 .PHONY : test_main.o
 
@@ -162,29 +186,29 @@ test_main.cpp.s:
 	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_main.cpp.s
 .PHONY : test_main.cpp.s
 
-test_tcp.o: test_tcp.cpp.o
-.PHONY : test_tcp.o
+test_poll.o: test_poll.cpp.o
+.PHONY : test_poll.o
 
 # target to build an object file
-test_tcp.cpp.o:
-	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_tcp.cpp.o
-.PHONY : test_tcp.cpp.o
+test_poll.cpp.o:
+	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_poll.cpp.o
+.PHONY : test_poll.cpp.o
 
-test_tcp.i: test_tcp.cpp.i
-.PHONY : test_tcp.i
+test_poll.i: test_poll.cpp.i
+.PHONY : test_poll.i
 
 # target to preprocess a source file
-test_tcp.cpp.i:
-	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_tcp.cpp.i
-.PHONY : test_tcp.cpp.i
+test_poll.cpp.i:
+	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_poll.cpp.i
+.PHONY : test_poll.cpp.i
 
-test_tcp.s: test_tcp.cpp.s
-.PHONY : test_tcp.s
+test_poll.s: test_poll.cpp.s
+.PHONY : test_poll.s
 
 # target to generate assembly for a file
-test_tcp.cpp.s:
-	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_tcp.cpp.s
-.PHONY : test_tcp.cpp.s
+test_poll.cpp.s:
+	$(MAKE) -f CMakeFiles/net_test.dir/build.make CMakeFiles/net_test.dir/test_poll.cpp.s
+.PHONY : test_poll.cpp.s
 
 # Help Target
 help:
@@ -198,12 +222,15 @@ help:
 	@echo "... test_echo.o"
 	@echo "... test_echo.i"
 	@echo "... test_echo.s"
+	@echo "... test_epoll.o"
+	@echo "... test_epoll.i"
+	@echo "... test_epoll.s"
 	@echo "... test_main.o"
 	@echo "... test_main.i"
 	@echo "... test_main.s"
-	@echo "... test_tcp.o"
-	@echo "... test_tcp.i"
-	@echo "... test_tcp.s"
+	@echo "... test_poll.o"
+	@echo "... test_poll.i"
+	@echo "... test_poll.s"
 .PHONY : help
 
 

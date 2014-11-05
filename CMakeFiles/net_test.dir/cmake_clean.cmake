@@ -1,7 +1,8 @@
 FILE(REMOVE_RECURSE
-  "CMakeFiles/net_test.dir/test_tcp.cpp.o"
   "CMakeFiles/net_test.dir/test_echo.cpp.o"
+  "CMakeFiles/net_test.dir/test_epoll.cpp.o"
   "CMakeFiles/net_test.dir/test_main.cpp.o"
+  "CMakeFiles/net_test.dir/test_poll.cpp.o"
   "net_test.pdb"
   "net_test"
 )

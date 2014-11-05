@@ -2,8 +2,9 @@
 #include "test_ip.h"
 #include "test_hostname.h"
 #include "test_endian.h"
-#include "test_tcp.h"
 #include "test_echo.h"
+#include "test_poll.h"
+#include "test_epoll.h"
 #include <string>
 #include <stdio.h>
 #include <map>
@@ -43,8 +44,9 @@ NetTest::NetTest()
 	RegistTestFun("ip", TestIP::Test); 
 	RegistTestFun("hostname", TestHostname::Test); 
 	RegistTestFun("endian", TestEndian::Test); 
-	RegistTestFun("tcp", TestTcp::Test); 
 	RegistTestFun("echo", TestEcho::Test); 
+	RegistTestFun("poll", TestPoll::Test); 
+	RegistTestFun("epoll", TestEpoll::Test); 
 }
 
 NetTest::~NetTest()

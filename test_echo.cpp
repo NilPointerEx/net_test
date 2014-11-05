@@ -170,4 +170,77 @@ void TestEcho::BeginServer(int argc, char ** argv)
 void TestEcho::BeginClient(int argc, char ** argv)
 {
 	printf("TestEcho BeginClient\n");
+	
+	if(argc<5)
+	{
+		printf("TestEcho Client Invalid Args!\n");
+		exit(1);
+	}
+
+	in_addr inaddr;
+	inet_pton(AF_INET, argv[3], (void *)&inaddr);
+	int port = atoi(argv[4]);
+
+	int client_fd = socket(AF_INET, SOCK_STREAM, 0);
+	if(-1==client_fd)
+	{
+		perror("Socket Error!\n");
+		exit(1);
+	}
+
+	sockaddr_in svr_addr;
+	svr_addr.sin_family = AF_INET;
+	svr_addr.sin_addr = inaddr;
+	svr_addr.sin_port = htons(port);
+
+	if(-1==connect(client_fd, (sockaddr*)&svr_addr, sizeof(svr_addr)))
+	{
+		perror("Connect Error!\n");
+		return;
+	}
+
+	fd_set rset, allset;
+	FD_ZERO(&allset);
+	FD_SET(client_fd, &allset);
+	FD_SET(STDIN_FILENO, &allset);
+	int maxfd  = MAX(client_fd, STDIN_FILENO);
+	int nready = -1;
+	char buf[BUF_SIZE] = {0};
+	int nread = 0;
+
+	while(1)
+	{
+		rset = allset;
+
+		nready = select(maxfd+1, &rset, nullptr, nullptr, nullptr);
+		if(-1==nready)
+		{
+			perror("Select Error!\n");
+			exit(1);
+		}
+
+		if(FD_ISSET(client_fd, &rset))
+		{
+			nread = read(client_fd, buf, BUF_SIZE);
+			if(nread<=0)
+			{
+				printf("Server Disconnectd!\n");
+				close(client_fd);
+				FD_CLR(client_fd, &allset);
+				continue;
+			}
+			write(STDIN_FILENO, buf, nread);
+		}
+
+		if(FD_ISSET(STDIN_FILENO, &rset))
+		{
+			nread = read(STDIN_FILENO, buf, BUF_SIZE);
+			if(nread<=0)
+			{
+				FD_CLR(STDIN_FILENO, &allset);
+				continue;
+			}
+			write(client_fd, buf, nread);
+		}
+	}
 }
