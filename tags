@@ -28,13 +28,13 @@ BUF_SIZE	test_poll.h	/^	static const int BUF_SIZE = 1024;$/;"	m	class:TestPoll	a
 BeginClient	test_echo.cpp	/^void TestEcho::BeginClient(int argc, char ** argv)$/;"	f	class:TestEcho	signature:(int argc, char ** argv)
 BeginClient	test_echo.h	/^	static void BeginClient(int argc, char ** argv);$/;"	p	class:TestEcho	access:private	signature:(int argc, char ** argv)
 BeginClient	test_epoll.cpp	/^void TestEpoll::BeginClient(int argc, char ** argv)$/;"	f	class:TestEpoll	signature:(int argc, char ** argv)
-BeginClient	test_epoll.h	/^	static void BeginClient(int argc, char ** argv);$/;"	p	class:TestEpoll	access:private	signature:(int argc, char ** argv)
+BeginClient	test_epoll.h	/^	static void BeginClient(int argc, char ** argv);$/;"	p	class:TestEpoll	access:public	signature:(int argc, char ** argv)
 BeginClient	test_poll.cpp	/^void TestPoll::BeginClient(int argc, char ** argv)$/;"	f	class:TestPoll	signature:(int argc, char ** argv)
 BeginClient	test_poll.h	/^	static void BeginClient(int argc, char ** argv);$/;"	p	class:TestPoll	access:private	signature:(int argc, char ** argv)
 BeginServer	test_echo.cpp	/^void TestEcho::BeginServer(int argc, char ** argv)$/;"	f	class:TestEcho	signature:(int argc, char ** argv)
 BeginServer	test_echo.h	/^	static void BeginServer(int argc, char ** argv);$/;"	p	class:TestEcho	access:private	signature:(int argc, char ** argv)
 BeginServer	test_epoll.cpp	/^void TestEpoll::BeginServer(int argc, char ** argv)$/;"	f	class:TestEpoll	signature:(int argc, char ** argv)
-BeginServer	test_epoll.h	/^	static void BeginServer(int argc, char ** argv);$/;"	p	class:TestEpoll	access:private	signature:(int argc, char ** argv)
+BeginServer	test_epoll.h	/^	static void BeginServer(int argc, char ** argv);$/;"	p	class:TestEpoll	access:public	signature:(int argc, char ** argv)
 BeginServer	test_poll.cpp	/^void TestPoll::BeginServer(int argc, char ** argv)$/;"	f	class:TestPoll	signature:(int argc, char ** argv)
 BeginServer	test_poll.h	/^	static void BeginServer(int argc, char ** argv);$/;"	p	class:TestPoll	access:private	signature:(int argc, char ** argv)
 CMAKE_BINARY_DIR	Makefile	/^CMAKE_BINARY_DIR = \/home\/zodiac\/git\/net_test$/;"	m
@@ -217,16 +217,18 @@ DECLARE_SINGLETON	common.h	5;"	d
 DECLARE_SINGLETON	net_test.h	/^DECLARE_SINGLETON(NetTest);$/;"	p	class:NetTest	access:private	signature:(NetTest)
 DeleteEvent	test_epoll.cpp	/^void TestEpoll::DeleteEvent(int efd, int fd, int evt)$/;"	f	class:TestEpoll	signature:(int efd, int fd, int evt)
 DeleteEvent	test_epoll.h	/^	static void DeleteEvent(int efd, int fd, int evt);$/;"	p	class:TestEpoll	access:private	signature:(int efd, int fd, int evt)
-DoAccept	test_epoll.h	/^	static void DoAccept();$/;"	p	class:TestEpoll	access:private	signature:()
+DoAccept	test_epoll.cpp	/^void TestEpoll::DoAccept(int ep_fd, int fd)$/;"	f	class:TestEpoll	signature:(int ep_fd, int fd)
+DoAccept	test_epoll.h	/^	static void DoAccept(int ep_fd, int fd);$/;"	p	class:TestEpoll	access:private	signature:(int ep_fd, int fd)
 DoEpoll	test_epoll.cpp	/^void TestEpoll::DoEpoll(int svr_fd)$/;"	f	class:TestEpoll	signature:(int svr_fd)
 DoEpoll	test_epoll.h	/^	static void DoEpoll(int svr_fd);$/;"	p	class:TestEpoll	access:private	signature:(int svr_fd)
-DoRead	test_epoll.h	/^	static void DoRead();$/;"	p	class:TestEpoll	access:private	signature:()
-DoWrite	test_epoll.h	/^	static void DoWrite();$/;"	p	class:TestEpoll	access:private	signature:()
-EPOLL_EVENTS	test_epoll.h	/^	static const int EPOLL_EVENTS = 1000;$/;"	m	class:TestEpoll	access:private
+DoRead	test_epoll.cpp	/^void TestEpoll::DoRead(int ep_fd, int fd, char *buf)$/;"	f	class:TestEpoll	signature:(int ep_fd, int fd, char *buf)
+DoRead	test_epoll.h	/^	static void DoRead(int ep_fd, int fd, char *buf);$/;"	p	class:TestEpoll	access:private	signature:(int ep_fd, int fd, char *buf)
+DoWrite	test_epoll.cpp	/^void TestEpoll::DoWrite(int ep_fd, int fd, char *buf)$/;"	f	class:TestEpoll	signature:(int ep_fd, int fd, char *buf)
+DoWrite	test_epoll.h	/^	static void DoWrite(int ep_fd, int fd, char *buf);$/;"	p	class:TestEpoll	access:private	signature:(int ep_fd, int fd, char *buf)
 EQUALS	Makefile	/^EQUALS = =$/;"	m
-FDSIZE	test_epoll.h	/^	static const int FDSIZE = 100;$/;"	m	class:TestEpoll	access:private
 HEX	CMakeFiles/2.8.11/CompilerIdC/CMakeCCompilerId.c	336;"	d	file:
 HEX	CMakeFiles/2.8.11/CompilerIdCXX/CMakeCXXCompilerId.cpp	323;"	d	file:
+HandleEvents	test_epoll.cpp	/^void TestEpoll::HandleEvents(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)$/;"	f	class:TestEpoll	signature:(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)
 HandleEvents	test_epoll.h	/^	static void HandleEvents(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf);$/;"	p	class:TestEpoll	access:private	signature:(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)
 ID_VOID_MAIN	CMakeFiles/2.8.11/CompilerIdC/CMakeCCompilerId.c	9;"	d	file:
 INFINITE	test_epoll.h	/^	static const int INFINITE = -1;$/;"	m	class:TestEpoll	access:private
@@ -235,6 +237,7 @@ LISTEN_ENQ	test_echo.h	/^	static const int LISTEN_ENQ = 5;$/;"	m	class:TestEcho	
 LISTEN_ENQ	test_epoll.h	/^	static const int LISTEN_ENQ = 5;$/;"	m	class:TestEpoll	access:private
 LISTEN_ENQ	test_poll.h	/^	static const int LISTEN_ENQ = 5;$/;"	m	class:TestPoll	access:private
 MAX	common.h	19;"	d
+MAX_EVENTS	test_epoll.h	/^	static const int MAX_EVENTS = 1000;$/;"	m	class:TestEpoll	access:private
 MIN	common.h	20;"	d
 ModifyEvent	test_epoll.cpp	/^void TestEpoll::ModifyEvent(int efd, int fd, int evt)$/;"	f	class:TestEpoll	signature:(int efd, int fd, int evt)
 ModifyEvent	test_epoll.h	/^	static void ModifyEvent(int efd, int fd, int evt);$/;"	p	class:TestEpoll	access:private	signature:(int efd, int fd, int evt)
@@ -305,6 +308,10 @@ RM	Makefile	/^RM = \/usr\/bin\/cmake -E remove -f$/;"	m
 RegistTestFun	net_test.h	/^	void RegistTestFun(string key, TestFun fun)$/;"	f	class:NetTest	access:private	signature:(string key, TestFun fun)
 SHELL	Makefile	/^SHELL = \/bin\/sh$/;"	m
 SUFFIXES	Makefile	/^SUFFIXES =$/;"	m
+SetNonBlocking	test_epoll.cpp	/^void TestEpoll::SetNonBlocking(int fd)$/;"	f	class:TestEpoll	signature:(int fd)
+SetNonBlocking	test_epoll.h	/^	static void  SetNonBlocking(int fd);$/;"	p	class:TestEpoll	access:private	signature:(int fd)
+SocketBind	test_epoll.cpp	/^int TestEpoll::SocketBind(const char *ip, int port)$/;"	f	class:TestEpoll	signature:(const char *ip, int port)
+SocketBind	test_epoll.h	/^	static int SocketBind(const char *ip, int port);$/;"	p	class:TestEpoll	access:private	signature:(const char *ip, int port)
 Test	net_test.h	/^	void Test(string key, int argc, char** argv)$/;"	f	class:NetTest	access:public	signature:(string key, int argc, char** argv)
 Test	test_echo.cpp	/^void TestEcho::Test(int argc, char ** argv)$/;"	f	class:TestEcho	signature:(int argc, char ** argv)
 Test	test_echo.h	/^	static void Test(int argc, char ** argv);$/;"	p	class:TestEcho	access:public	signature:(int argc, char ** argv)
@@ -331,23 +338,30 @@ TestEpoll::AddEvent	test_epoll.cpp	/^void TestEpoll::AddEvent(int efd, int fd, i
 TestEpoll::AddEvent	test_epoll.h	/^	static void AddEvent(int efd, int fd, int evt);$/;"	p	class:TestEpoll	access:private	signature:(int efd, int fd, int evt)
 TestEpoll::BUF_SIZE	test_epoll.h	/^	static const int BUF_SIZE = 1024;$/;"	m	class:TestEpoll	access:private
 TestEpoll::BeginClient	test_epoll.cpp	/^void TestEpoll::BeginClient(int argc, char ** argv)$/;"	f	class:TestEpoll	signature:(int argc, char ** argv)
-TestEpoll::BeginClient	test_epoll.h	/^	static void BeginClient(int argc, char ** argv);$/;"	p	class:TestEpoll	access:private	signature:(int argc, char ** argv)
+TestEpoll::BeginClient	test_epoll.h	/^	static void BeginClient(int argc, char ** argv);$/;"	p	class:TestEpoll	access:public	signature:(int argc, char ** argv)
 TestEpoll::BeginServer	test_epoll.cpp	/^void TestEpoll::BeginServer(int argc, char ** argv)$/;"	f	class:TestEpoll	signature:(int argc, char ** argv)
-TestEpoll::BeginServer	test_epoll.h	/^	static void BeginServer(int argc, char ** argv);$/;"	p	class:TestEpoll	access:private	signature:(int argc, char ** argv)
+TestEpoll::BeginServer	test_epoll.h	/^	static void BeginServer(int argc, char ** argv);$/;"	p	class:TestEpoll	access:public	signature:(int argc, char ** argv)
 TestEpoll::DeleteEvent	test_epoll.cpp	/^void TestEpoll::DeleteEvent(int efd, int fd, int evt)$/;"	f	class:TestEpoll	signature:(int efd, int fd, int evt)
 TestEpoll::DeleteEvent	test_epoll.h	/^	static void DeleteEvent(int efd, int fd, int evt);$/;"	p	class:TestEpoll	access:private	signature:(int efd, int fd, int evt)
-TestEpoll::DoAccept	test_epoll.h	/^	static void DoAccept();$/;"	p	class:TestEpoll	access:private	signature:()
+TestEpoll::DoAccept	test_epoll.cpp	/^void TestEpoll::DoAccept(int ep_fd, int fd)$/;"	f	class:TestEpoll	signature:(int ep_fd, int fd)
+TestEpoll::DoAccept	test_epoll.h	/^	static void DoAccept(int ep_fd, int fd);$/;"	p	class:TestEpoll	access:private	signature:(int ep_fd, int fd)
 TestEpoll::DoEpoll	test_epoll.cpp	/^void TestEpoll::DoEpoll(int svr_fd)$/;"	f	class:TestEpoll	signature:(int svr_fd)
 TestEpoll::DoEpoll	test_epoll.h	/^	static void DoEpoll(int svr_fd);$/;"	p	class:TestEpoll	access:private	signature:(int svr_fd)
-TestEpoll::DoRead	test_epoll.h	/^	static void DoRead();$/;"	p	class:TestEpoll	access:private	signature:()
-TestEpoll::DoWrite	test_epoll.h	/^	static void DoWrite();$/;"	p	class:TestEpoll	access:private	signature:()
-TestEpoll::EPOLL_EVENTS	test_epoll.h	/^	static const int EPOLL_EVENTS = 1000;$/;"	m	class:TestEpoll	access:private
-TestEpoll::FDSIZE	test_epoll.h	/^	static const int FDSIZE = 100;$/;"	m	class:TestEpoll	access:private
+TestEpoll::DoRead	test_epoll.cpp	/^void TestEpoll::DoRead(int ep_fd, int fd, char *buf)$/;"	f	class:TestEpoll	signature:(int ep_fd, int fd, char *buf)
+TestEpoll::DoRead	test_epoll.h	/^	static void DoRead(int ep_fd, int fd, char *buf);$/;"	p	class:TestEpoll	access:private	signature:(int ep_fd, int fd, char *buf)
+TestEpoll::DoWrite	test_epoll.cpp	/^void TestEpoll::DoWrite(int ep_fd, int fd, char *buf)$/;"	f	class:TestEpoll	signature:(int ep_fd, int fd, char *buf)
+TestEpoll::DoWrite	test_epoll.h	/^	static void DoWrite(int ep_fd, int fd, char *buf);$/;"	p	class:TestEpoll	access:private	signature:(int ep_fd, int fd, char *buf)
+TestEpoll::HandleEvents	test_epoll.cpp	/^void TestEpoll::HandleEvents(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)$/;"	f	class:TestEpoll	signature:(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)
 TestEpoll::HandleEvents	test_epoll.h	/^	static void HandleEvents(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf);$/;"	p	class:TestEpoll	access:private	signature:(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)
 TestEpoll::INFINITE	test_epoll.h	/^	static const int INFINITE = -1;$/;"	m	class:TestEpoll	access:private
 TestEpoll::LISTEN_ENQ	test_epoll.h	/^	static const int LISTEN_ENQ = 5;$/;"	m	class:TestEpoll	access:private
+TestEpoll::MAX_EVENTS	test_epoll.h	/^	static const int MAX_EVENTS = 1000;$/;"	m	class:TestEpoll	access:private
 TestEpoll::ModifyEvent	test_epoll.cpp	/^void TestEpoll::ModifyEvent(int efd, int fd, int evt)$/;"	f	class:TestEpoll	signature:(int efd, int fd, int evt)
 TestEpoll::ModifyEvent	test_epoll.h	/^	static void ModifyEvent(int efd, int fd, int evt);$/;"	p	class:TestEpoll	access:private	signature:(int efd, int fd, int evt)
+TestEpoll::SetNonBlocking	test_epoll.cpp	/^void TestEpoll::SetNonBlocking(int fd)$/;"	f	class:TestEpoll	signature:(int fd)
+TestEpoll::SetNonBlocking	test_epoll.h	/^	static void  SetNonBlocking(int fd);$/;"	p	class:TestEpoll	access:private	signature:(int fd)
+TestEpoll::SocketBind	test_epoll.cpp	/^int TestEpoll::SocketBind(const char *ip, int port)$/;"	f	class:TestEpoll	signature:(const char *ip, int port)
+TestEpoll::SocketBind	test_epoll.h	/^	static int SocketBind(const char *ip, int port);$/;"	p	class:TestEpoll	access:private	signature:(const char *ip, int port)
 TestEpoll::Test	test_epoll.cpp	/^void TestEpoll::Test(int argc, char ** argv)$/;"	f	class:TestEpoll	signature:(int argc, char ** argv)
 TestEpoll::Test	test_epoll.h	/^	static void Test(int argc, char ** argv);$/;"	p	class:TestEpoll	access:public	signature:(int argc, char ** argv)
 TestFun	net_test.h	/^	typedef void(*TestFun)(int argc, char** argv);$/;"	t	class:NetTest	access:private
