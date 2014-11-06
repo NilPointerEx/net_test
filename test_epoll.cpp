@@ -39,7 +39,7 @@ void TestEpoll::BeginServer(int argc, char ** argv)
 {
 	printf("TestEpoll BeginServer\n");
 	
-	//参数检查
+	//Argument Checking
 	if(argc<4)
 	{
 		perror("TestEpoll Server Argument Invalid\n");
