@@ -1,5 +1,11 @@
 #include <sys/epoll.h>
 
+#define BUF_SIZE 1024
+#define LISTEN_ENQ 5
+#define INFINITE -1
+#define MAX_EVENTS 1000
+#define IP_SERVER "0.0.0.0"
+
 class TestEpoll
 {
 public:
@@ -8,11 +14,6 @@ public:
 	static void BeginServer(int argc, char ** argv);
 
 private:
-	static const int BUF_SIZE = 1024;
-	static const int LISTEN_ENQ = 5;
-	static const int INFINITE = -1;
-	static const int MAX_EVENTS = 1000;
-	
 	static int SocketBind(const char *ip, int port);
 	static void DoEpoll(int svr_fd);
 	

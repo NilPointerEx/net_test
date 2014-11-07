@@ -46,8 +46,8 @@ void TestEpoll::BeginServer(int argc, char ** argv)
 	int port = atoi(argv[3]);
 
 	//Begin Epoll 
-	int svr_fd = SocketBind("0.0.0.0", port);
-    listen(svr_fd, 20);
+	int svr_fd = SocketBind(IP_SERVER, port);
+    listen(svr_fd, LISTEN_ENQ);
 	DoEpoll(svr_fd);
 }
 
