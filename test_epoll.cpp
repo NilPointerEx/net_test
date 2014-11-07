@@ -45,27 +45,10 @@ void TestEpoll::BeginServer(int argc, char ** argv)
 		perror("TestEpoll Server Argument Invalid\n");
 		exit(1);
 	}
-
-	sockaddr_in svr_addr;
 	int port = atoi(argv[3]);
 	
 	//socket
-	int svr_fd = 0;
-	if(-1==(svr_fd =socket(AF_INET, SOCK_STREAM, 0)))
-	{
-		perror("Socket Error!\n");
-		exit(1);
-	}
-	SetNonBlocking(svr_fd);
-	bzero(&svr_addr, sizeof(svr_addr));
-	svr_addr.sin_family = AF_INET;
-	svr_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	svr_addr.sin_port = htons(port);
-	if(-1==(bind(svr_fd, (sockaddr*)&svr_addr, sizeof(svr_addr))))
-	{
-		perror("Bind Error!\n");
-		exit(1);
-	}
+	int svr_fd = SocketBind("0.0.0.0", port);
 
 	//listen
 	listen(svr_fd, LISTEN_ENQ);
@@ -84,11 +67,11 @@ int TestEpoll::SocketBind(const char *ip, int port)
 		perror("Socket Error!\n");
 		exit(1);
 	}
-	//SetNonBlocking(svr_fd);
+	SetNonBlocking(svr_fd);
 	bzero(&svr_addr, sizeof(svr_addr));
 	svr_addr.sin_family = AF_INET;
-	//inet_pton(AF_INET, ip, &(svr_addr.sin_addr));
-	svr_addr.sin_addr.s_addr = htons(INADDR_ANY);
+	inet_pton(AF_INET, ip, &(svr_addr.sin_addr));
+	//svr_addr.sin_addr.s_addr = htons(INADDR_ANY);
 	svr_addr.sin_port = htons(port);
 	if(-1==(bind(svr_fd, (sockaddr*)&svr_addr, sizeof(svr_addr))))
 	{
@@ -97,6 +80,22 @@ int TestEpoll::SocketBind(const char *ip, int port)
 	}
 	return svr_fd;
 }
+
+int acpt(int efd, int fd)
+{
+			sockaddr_in cliaddr;
+			socklen_t cliaddrlen;	
+			int client_fd;
+			client_fd = accept(fd, (sockaddr*)&cliaddr, &cliaddrlen);
+			if(-1==client_fd)
+			{
+				perror("Accept Error!\n");
+				exit(1);
+			}
+			printf("New Connection with : %s:%d \n", inet_ntoa(cliaddr.sin_addr), cliaddr.sin_port);
+			return client_fd;
+}
+
 
 void TestEpoll::DoEpoll(int svr_fd)
 {
@@ -108,7 +107,40 @@ void TestEpoll::DoEpoll(int svr_fd)
 	while(1)
 	{
 		ret = epoll_wait(ep_fd, events, MAX_EVENTS, INFINITE);
-		HandleEvents(ep_fd, events, ret, svr_fd, buf);
+	//	HandleEvents(ep_fd, events, ret, svr_fd, buf);
+	int i;
+	int fd;
+	int num = ret;
+
+	if(num<0)
+	{
+		perror("epoll_wait Error!\n");
+		exit(1);
+	}
+
+	for(i=0;i<num;++i)
+	{
+		fd = events[i].data.fd;
+		if((fd==svr_fd) && (events[i].events & EPOLLIN))
+		{
+		//	DoAccept(ep_fd, fd);
+			int client_fd = acpt(ep_fd, fd);
+			SetNonBlocking(client_fd);
+			AddEvent(ep_fd, client_fd, EPOLLIN);
+		}
+		else if(events[i].events & EPOLLIN)
+		{
+			DoRead(ep_fd, fd, buf);
+		}
+		else if(events[i].events & EPOLLOUT)
+		{
+			DoWrite(ep_fd, fd, buf);
+		}
+		else
+		{
+			perror("Unhandled Event!\n");
+		}
+	}
 	}
 	close(ep_fd);
 }
