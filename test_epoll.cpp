@@ -93,30 +93,30 @@ int TestEpoll::SocketBind(const char *ip, int port)
 
 void TestEpoll::DoEpoll(int svr_fd)
 {
-	epoll_event ev, events[MAX_EVENTS];
-	int ret = 0;
+	epoll_event events[MAX_EVENTS];
+	int nfd = 0;
 	char buf[BUF_SIZE] = {0};
 	int	ep_fd = epoll_create(MAX_EVENTS);
-	AddEvent(ep_fd, svr_fd, EPOLLIN);	
+	AddEvent(ep_fd, svr_fd, EPOLLIN | EPOLLET);	
     while(1) {
-        ret = epoll_wait(ep_fd, events, MAX_EVENTS, INFINITE);
-		HandleEvents(ep_fd, events, ret, svr_fd, buf);
+        nfd = epoll_wait(ep_fd, events, MAX_EVENTS, INFINITE);
+		HandleEvents(ep_fd, events, nfd, svr_fd, buf);
     }
 	close(ep_fd);
 }
 
-void TestEpoll::HandleEvents(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)
+void TestEpoll::HandleEvents(int ep_fd, epoll_event *events, int nfd, int svr_fd, char *buf)
 {
 	int i;
 	int fd;
 
-	if(num<0)
+	if(nfd<0)
 	{
 		perror("epoll_wait Error!\n");
 		exit(1);
 	}
 
-	for(i=0;i<num;++i)
+	for(i=0;i<nfd;++i)
 	{
 		fd = events[i].data.fd;
 		if((fd==svr_fd) && (events[i].events & EPOLLIN))
@@ -140,59 +140,94 @@ void TestEpoll::HandleEvents(int ep_fd, epoll_event *events, int num, int svr_fd
 
 void TestEpoll::DoAccept(int ep_fd, int fd)
 {
-	sockaddr_in local, cliaddr;
-	socklen_t cliaddrlen = sizeof(sockaddr_in);	
-	int client_fd;
+	sockaddr_in conn_addr;
+	socklen_t addrlen = sizeof(sockaddr_in);	
+	int conn_fd;
 	
-	while((client_fd = accept(fd, (sockaddr*)&cliaddr, &cliaddrlen))>0)
+	while((conn_fd = accept(fd, (sockaddr*)&conn_addr, &addrlen))>0)
 	{
-		SetNonBlocking(client_fd);
-		printf("New Connection with : %s:%d \n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
-		AddEvent(ep_fd, client_fd, EPOLLIN);
+		SetNonBlocking(conn_fd);
+		printf("New Connection with : %s:%d \n", inet_ntoa(conn_addr.sin_addr), ntohs(conn_addr.sin_port));
+		AddEvent(ep_fd, conn_fd, EPOLLIN | EPOLLET);
 	}
-	if(-1==client_fd)
+	if(-1==conn_fd)
 	{
-		perror("Accept Error!\n");
+		if(errno!=EAGAIN && errno!=ECONNABORTED && errno!=EPROTO && errno!=EINTR)
+		{
+			perror("Accept Error!\n");
+		}
 	}
 }
 
 void TestEpoll::DoRead(int ep_fd, int fd, char *buf)
 {
-	int nread;
-	nread = read(fd, buf, BUF_SIZE);
-	if(nread<0)
+	int nread = 0;
+	int n = 0;
+	
+	while((nread = read(fd, buf+n, BUF_SIZE-1-n))>0)
 	{
-		perror("Read Error!\n");
-		close(fd);
-		DeleteEvent(ep_fd, fd, EPOLLIN);
+		n += nread;	
 	}
-	else if(0==nread)
+
+	if(n>0)
+	{
+		buf[n] = '\0';
+		printf("Receive Message : %s\n", buf);
+	}
+
+	if(0==nread)
 	{
 		printf("Client Disconneted!\n");
 		close(fd);
 		DeleteEvent(ep_fd, fd, EPOLLIN);
 	}
+	else if(nread<0 && errno!=EAGAIN)
+	{
+		perror("Read Error!\n");
+		close(fd);
+		DeleteEvent(ep_fd, fd, EPOLLIN);
+	}
 	else
 	{
-		buf[nread] = '\0';
-		printf("Receive Message : %s\n", buf);
-		ModifyEvent(ep_fd, fd, EPOLLOUT);
+		ModifyEvent(ep_fd, fd, EPOLLOUT | EPOLLET);
 	}
 }
 
 void TestEpoll::DoWrite(int ep_fd, int fd, char *buf)
 {
 	int nwrite;
-	nwrite = write(fd, buf, strlen(buf));
-	if(nwrite<0)
+	int nsize = strlen(buf);
+	int n = 0;
+
+	while(n<nsize)
 	{
-		perror("Write Error!\n");
-		close(fd);
-		DeleteEvent(ep_fd, fd, EPOLLOUT);
-	}
-	else
-	{
-		ModifyEvent(ep_fd, fd, EPOLLIN);
+		nwrite = write(fd, buf+n, nsize-n);
+		
+		if(nwrite>0)
+		{
+			n += nwrite;
+			if(n==nsize)
+			{
+				ModifyEvent(ep_fd, fd, EPOLLIN);
+			}
+		}
+		else if(0==nwrite)
+		{
+			printf("Client Disconneted!\n");
+			close(fd);
+			DeleteEvent(ep_fd, fd, EPOLLOUT);
+			break;
+		}
+		else if(nwrite<0)
+		{
+			if(errno!=EAGAIN)
+			{
+				perror("Write Error!\n");
+				close(fd);
+				DeleteEvent(ep_fd, fd, EPOLLOUT);
+			}
+			break;
+		}
 	}
 }
 

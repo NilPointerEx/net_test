@@ -1,4 +1,4 @@
-cscope 15 $HOME/git/net_test -q 0000000311 0000038398
+cscope 15 $HOME/git/net_test -q 0000000318 0000038717
 	@CMakeFiles/2.8.11/CompilerIdC/CMakeCCompilerId.c
 
 1 #ifdeà
@@ -4536,54 +4536,46 @@ c
 "
 
 2 
-	~"commÚ.h
-"
-
-3 
 	~<sys/sock‘.h
 >
 
-4 
-	~<sys/ty³s.h
->
-
-5 
+3 
 	~<¬·/š‘.h
 >
 
-6 
+4 
 	~<Ãtš‘/š.h
 >
 
-7 
+5 
 	~<¡dlib.h
 >
 
-8 
+6 
 	~<¡dio.h
 >
 
-9 
+7 
 	~<¡ršg.h
 >
 
-10 
+8 
 	~<”ºo.h
 >
 
-11 
+9 
 	~<uni¡d.h
 >
 
-12 
+10 
 	~<sys/•Þl.h
 >
 
-13 
+11 
 	~<fúŽ.h
 >
 
-15 
+13 
 	gTe¡EpÞl
 ::
 	$Te¡
@@ -4593,25 +4585,25 @@ c
 ¬gv
 )
 
-17 
+15 
 	`´štf
 ("TestEpoll::Test!\n");
 
-19 if(
+17 if(
 ¬gc
 <3)
 
-21 
+19 
 	`´štf
 ("TestEpoll Invalid Args!\n");
 
-24 if(0 =ð
+22 if(0 =ð
 	`¡rcmp
 ("þ›Á", 
 ¬gv
 [2]))
 
-26 
+24 
 	`BegšCl›Á
 (
 ¬gc
@@ -4619,13 +4611,13 @@ c
 ¬gv
 );
 
-28 if(0 =ð
+26 if(0 =ð
 	`¡rcmp
 ("£rv”", 
 ¬gv
 [2]))
 
-30 
+28 
 	`BegšS”v”
 (
 ¬gc
@@ -4633,15 +4625,15 @@ c
 ¬gv
 );
 
-34 
+32 
 	`´štf
 ("TestEpoll Invalid Args!\n");
 
-36 
+34 
 	}
 }
 
-38 
+36 
 	gTe¡EpÞl
 ::
 	$BegšS”v”
@@ -4651,23 +4643,23 @@ c
 ¬gv
 )
 
-40 
+38 
 	`´štf
 ("TestEpoll BeginServer\n");
 
-43 if(
+41 if(
 ¬gc
 <4)
 
-45 
+43 
 	`³¼Ü
 ("TestEpoll Server Argument Invalid\n");
 
-46 
+44 
 	`ex™
 (1);
 
-49 
+46 
 pÜt
  = 
 	`©oi
@@ -4675,7 +4667,7 @@ pÜt
 ¬gv
 [3]);
 
-50 
+49 
 svr_fd
  = 
 	`Sock‘Bšd
@@ -4683,25 +4675,85 @@ svr_fd
 pÜt
 );
 
-53 
+50 
 	`li¡’
 (
 svr_fd
-, 
-LISTEN_ENQ
-);
+, 20);
 
-56 
+51 
 	`DoEpÞl
 (
 svr_fd
 );
 
-57 
+52 
 	}
 }
 
-59 
+54 
+	gTe¡EpÞl
+::
+	$S‘NÚBlockšg
+(
+fd
+)
+
+56 
+Ýts
+;
+
+57 
+Ýts
+ = 
+	`fúŽ
+(
+fd
+, 
+F_GETFL
+);
+
+58 if(
+Ýts
+<0)
+
+60 
+	`³¼Ü
+("F_GETFL Error!\n");
+
+61 
+	`ex™
+(1);
+
+63 
+Ýts
+ = o± | 
+O_NONBLOCK
+;
+
+64 if(
+	`fúŽ
+(
+fd
+, 
+F_SETFL
+, 
+Ýts
+)<0)
+
+66 
+	`³¼Ü
+("F_SETFL Error!\n");
+
+67 
+	`ex™
+(1);
+
+69 
+	}
+}
+
+71 
 	gTe¡EpÞl
 ::
 	$Sock‘Bšd
@@ -4711,17 +4763,17 @@ svr_fd
 pÜt
 )
 
-61 
+73 
 svr_fd
  = 0;
 
-62 
+74 
 sockaddr_š
  
 svr_addr
 ;
 
-64 if(-1==(
+76 if(-1==(
 svr_fd
  =
 	`sock‘
@@ -4731,21 +4783,27 @@ AF_INET
 SOCK_STREAM
 , 0)))
 
-66 
+78 
 	`³¼Ü
 ("Socket Error!\n");
 
-67 
+79 
 	`ex™
 (1);
 
-70 
+81 
+	`S‘NÚBlockšg
+(
+svr_fd
+);
+
+82 
 	`bz”o
 (&
 svr_addr
 , (svr_addr));
 
-71 
+83 
 svr_addr
 .
 sš_çmžy
@@ -4753,7 +4811,7 @@ sš_çmžy
 AF_INET
 ;
 
-72 
+84 
 	`š‘_±Ú
 (
 AF_INET
@@ -4765,7 +4823,7 @@ svr_addr
 sš_addr
 ));
 
-73 
+85 
 svr_addr
 .
 sš_pÜt
@@ -4775,7 +4833,7 @@ sš_pÜt
 pÜt
 );
 
-74 if(-1==(
+86 if(-1==(
 	`bšd
 (
 svr_fd
@@ -4785,19 +4843,23 @@ sockaddr
 svr_addr
 , (svr_addr))))
 
-76 
+88 
 	`³¼Ü
 ("Bind Error!\n");
 
-77 
+89 
 	`ex™
 (1);
 
-79 
+91  
+svr_fd
+;
+
+92 
 	}
 }
 
-81 
+94 
 	gTe¡EpÞl
 ::
 	$DoEpÞl
@@ -4805,7 +4867,7 @@ svr_addr
 svr_fd
 )
 
-83 
+96 
 •Þl_ev’t
  
 ev’ts
@@ -4813,17 +4875,17 @@ ev’ts
 MAX_EVENTS
 ];
 
-84 
-»t
+97 
+nfd
  = 0;
 
-85 
+98 
 buf
 [
 BUF_SIZE
 ] = {0};
 
-86 
+99 
 •_fd
  = 
 	`•Þl_ü—‹
@@ -4831,7 +4893,7 @@ BUF_SIZE
 MAX_EVENTS
 );
 
-87 
+100 
 	`AddEv’t
 (
 •_fd
@@ -4839,10 +4901,12 @@ MAX_EVENTS
 svr_fd
 , 
 EPOLLIN
+ | 
+EPOLLET
 );
 
-90 
-»t
+102 
+nfd
  = 
 	`•Þl_wa™
 (
@@ -4855,31 +4919,31 @@ MAX_EVENTS
 INFINITE
 );
 
-91 
+103 
 	`HªdËEv’ts
 (
 •_fd
 , 
 ev’ts
 , 
-»t
+nfd
 , 
 svr_fd
 , 
 buf
 );
 
-93 
+105 
 	`þo£
 (
 •_fd
 );
 
-94 
+106 
 	}
 }
 
-96 
+108 
 	gTe¡EpÞl
 ::
 	$HªdËEv’ts
@@ -4890,28 +4954,40 @@ buf
  *
 ev’ts
 , 
-num
+nfd
 , 
 svr_fd
 , *
 buf
 )
 
-98 
+110 
 i
 ;
 
-99 
+111 
 fd
 ;
 
-100 
+113 if(
+nfd
+<0)
+
+115 
+	`³¼Ü
+("epoll_wait Error!\n");
+
+116 
+	`ex™
+(1);
+
+119 
 i
 =0;i<
-num
+nfd
 ;++i)
 
-102 
+121 
 fd
  = 
 ev’ts
@@ -4921,7 +4997,7 @@ i
 d©a
 .fd;
 
-103 if((
+122 if((
 fd
 ==
 svr_fd
@@ -4933,7 +5009,7 @@ i
 EPOLLIN
 ))
 
-105 
+124 
 	`DoAcû±
 (
 •_fd
@@ -4941,7 +5017,7 @@ EPOLLIN
 fd
 );
 
-107 if(
+126 if(
 ev’ts
 [
 i
@@ -4949,7 +5025,7 @@ i
 EPOLLIN
 )
 
-109 
+128 
 	`DoR—d
 (
 •_fd
@@ -4959,7 +5035,7 @@ fd
 buf
 );
 
-111 if(
+130 if(
 ev’ts
 [
 i
@@ -4967,7 +5043,7 @@ i
 EPOLLOUT
 )
 
-113 
+132 
 	`DoWr™e
 (
 •_fd
@@ -4977,15 +5053,15 @@ fd
 buf
 );
 
-117 
+136 
 	`³¼Ü
 ("Unhandled Event!\n");
 
-120 
+139 
 	}
 }
 
-122 
+141 
 	gTe¡EpÞl
 ::
 	$DoAcû±
@@ -4995,20 +5071,26 @@ buf
 fd
 )
 
-124 
+143 
 sockaddr_š
  
-þŸddr
+cÚn_addr
 ;
 
-125 
+144 
 sockËn_t
  
-þŸdd¾’
+add¾’
+ = (
+sockaddr_š
+);
+
+145 
+cÚn_fd
 ;
 
-126 
-þ›Á_fd
+147 (
+cÚn_fd
  = 
 	`acû±
 (
@@ -5016,46 +5098,68 @@ fd
 , (
 sockaddr
 *)&
-þŸddr
+cÚn_addr
 , &
-þŸdd¾’
+add¾’
+))>0)
+
+149 
+	`S‘NÚBlockšg
+(
+cÚn_fd
 );
 
-127 if(-1==
-þ›Á_fd
-)
-
-129 
-	`³¼Ü
-("Accept Error!\n");
-
-133 
+150 
 	`´štf
 ("New CÚÃùiÚ w™h : %s:%d \n", 
 	`š‘_Áß
 (
-þŸddr
+cÚn_addr
 .
 sš_addr
-), clŸddr.
+), 
+	`Áohs
+(cÚn_addr.
 sš_pÜt
-);
+));
 
-134 
+151 
 	`AddEv’t
 (
 •_fd
 , 
-þ›Á_fd
+cÚn_fd
 , 
 EPOLLIN
+ | 
+EPOLLET
 );
 
-136 
+153 if(-1==
+cÚn_fd
+)
+
+155 if(
+”ºo
+!=
+EAGAIN
+ &&ƒ¼no!=
+ECONNABORTED
+ &&ƒ¼no!=
+EPROTO
+ &&ƒ¼no!=
+EINTR
+)
+
+157 
+	`³¼Ü
+("Accept Error!\n");
+
+160 
 	}
 }
 
-138 
+162 
 	gTe¡EpÞl
 ::
 	$DoR—d
@@ -5067,11 +5171,23 @@ fd
 buf
 )
 
-140 
+164 
 Ä—d
-;
+ = 0;
 
-141 
+166 
+Ä—d
+ = 
+	`»ad
+(
+fd
+, 
+buf
++Ä—d, 
+BUF_SIZE
+-1);
+
+169 
 Ä—d
  = 
 	`»ad
@@ -5083,21 +5199,21 @@ buf
 BUF_SIZE
 );
 
-142 if(
+170 if(
 Ä—d
 <0)
 
-144 
+172 
 	`³¼Ü
 ("Read Error!\n");
 
-145 
+173 
 	`þo£
 (
 fd
 );
 
-146 
+174 
 	`D–‘eEv’t
 (
 •_fd
@@ -5107,21 +5223,21 @@ fd
 EPOLLIN
 );
 
-148 if(0==
+176 if(0==
 Ä—d
 )
 
-150 
+178 
 	`´štf
 ("Client Disconneted!\n");
 
-151 
+179 
 	`þo£
 (
 fd
 );
 
-152 
+180 
 	`D–‘eEv’t
 (
 •_fd
@@ -5131,19 +5247,19 @@ fd
 EPOLLIN
 );
 
-156 
+184 
 buf
 [
 Ä—d
 ] = '\0';
 
-157 
+185 
 	`´štf
 ("ReûivMes§g: %s\n", 
 buf
 );
 
-158 
+186 
 	`ModifyEv’t
 (
 •_fd
@@ -5153,11 +5269,11 @@ fd
 EPOLLOUT
 );
 
-160 
+188 
 	}
 }
 
-162 
+190 
 	gTe¡EpÞl
 ::
 	$DoWr™e
@@ -5169,11 +5285,11 @@ fd
 buf
 )
 
-164 
+192 
 nwr™e
 ;
 
-165 
+193 
 nwr™e
  = 
 	`wr™e
@@ -5185,21 +5301,21 @@ buf
 	`¡¾’
 (buf));
 
-166 if(
+194 if(
 nwr™e
 <0)
 
-168 
+196 
 	`³¼Ü
 ("Write Error!\n");
 
-169 
+197 
 	`þo£
 (
 fd
 );
 
-170 
+198 
 	`D–‘eEv’t
 (
 •_fd
@@ -5209,7 +5325,7 @@ fd
 EPOLLOUT
 );
 
-174 
+202 
 	`ModifyEv’t
 (
 •_fd
@@ -5219,11 +5335,11 @@ fd
 EPOLLIN
 );
 
-176 
+204 
 	}
 }
 
-178 
+206 
 	gTe¡EpÞl
 ::
 	$AddEv’t
@@ -5235,13 +5351,13 @@ fd
 evt
 )
 
-180 
+208 
 •Þl_ev’t
  
 •_evt
 ;
 
-181 
+209 
 •_evt
 .
 ev’ts
@@ -5249,7 +5365,7 @@ ev’ts
 evt
 ;
 
-182 
+210 
 •_evt
 .
 d©a
@@ -5257,7 +5373,7 @@ d©a
 fd
  = fd;
 
-183 
+211 
 	`•Þl_ùl
 (
 efd
@@ -5269,11 +5385,11 @@ fd
 •_evt
 );
 
-184 
+212 
 	}
 }
 
-186 
+214 
 	gTe¡EpÞl
 ::
 	$ModifyEv’t
@@ -5285,13 +5401,13 @@ fd
 evt
 )
 
-188 
+216 
 •Þl_ev’t
  
 •_evt
 ;
 
-189 
+217 
 •_evt
 .
 ev’ts
@@ -5299,7 +5415,7 @@ ev’ts
 evt
 ;
 
-190 
+218 
 •_evt
 .
 d©a
@@ -5307,7 +5423,7 @@ d©a
 fd
  = fd;
 
-191 
+219 
 	`•Þl_ùl
 (
 efd
@@ -5319,11 +5435,11 @@ fd
 •_evt
 );
 
-192 
+220 
 	}
 }
 
-194 
+222 
 	gTe¡EpÞl
 ::
 	$D–‘eEv’t
@@ -5335,13 +5451,13 @@ fd
 evt
 )
 
-196 
+224 
 •Þl_ev’t
  
 •_evt
 ;
 
-197 
+225 
 •_evt
 .
 ev’ts
@@ -5349,7 +5465,7 @@ ev’ts
 evt
 ;
 
-198 
+226 
 •_evt
 .
 d©a
@@ -5357,7 +5473,7 @@ d©a
 fd
  = fd;
 
-199 
+227 
 	`•Þl_ùl
 (
 efd
@@ -5369,11 +5485,11 @@ fd
 •_evt
 );
 
-200 
+228 
 	}
 }
 
-202 
+230 
 	gTe¡EpÞl
 ::
 	$BegšCl›Á
@@ -5383,73 +5499,11 @@ fd
 ¬gv
 )
 
-204 
+232 
 	`´štf
 ("TestEpoll BeginClient!\n");
 
-205 
-	}
-}
-
-207 
-	gTe¡EpÞl
-::
-	$S‘NÚBlockšg
-(
-fd
-)
-
-209 
-Ýts
-;
-
-210 
-Ýts
- = 
-	`fúŽ
-(
-fd
-, 
-F_GETFL
-);
-
-211 if(
-Ýts
-<0)
-
-213 
-	`³¼Ü
-("F_GETFL Error!\n");
-
-214 
-	`ex™
-(1);
-
-216 
-Ýts
- = o± | 
-O_NONBLOCK
-;
-
-217 if(
-	`fúŽ
-(
-fd
-, 
-F_SETFL
-, 
-Ýts
-)<0)
-
-219 
-	`³¼Ü
-("F_SETFL Error!\n");
-
-220 
-	`ex™
-(1);
-
-222 
+233 
 	}
 }
 

@@ -228,7 +228,7 @@ DoWrite	test_epoll.h	/^	static void DoWrite(int ep_fd, int fd, char *buf);$/;"	p
 EQUALS	Makefile	/^EQUALS = =$/;"	m
 HEX	CMakeFiles/2.8.11/CompilerIdC/CMakeCCompilerId.c	336;"	d	file:
 HEX	CMakeFiles/2.8.11/CompilerIdCXX/CMakeCXXCompilerId.cpp	323;"	d	file:
-HandleEvents	test_epoll.cpp	/^void TestEpoll::HandleEvents(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)$/;"	f	class:TestEpoll	signature:(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)
+HandleEvents	test_epoll.cpp	/^void TestEpoll::HandleEvents(int ep_fd, epoll_event *events, int nfd, int svr_fd, char *buf)$/;"	f	class:TestEpoll	signature:(int ep_fd, epoll_event *events, int nfd, int svr_fd, char *buf)
 HandleEvents	test_epoll.h	/^	static void HandleEvents(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf);$/;"	p	class:TestEpoll	access:private	signature:(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)
 ID_VOID_MAIN	CMakeFiles/2.8.11/CompilerIdC/CMakeCCompilerId.c	9;"	d	file:
 INFINITE	test_epoll.h	/^	static const int INFINITE = -1;$/;"	m	class:TestEpoll	access:private
@@ -351,7 +351,7 @@ TestEpoll::DoRead	test_epoll.cpp	/^void TestEpoll::DoRead(int ep_fd, int fd, cha
 TestEpoll::DoRead	test_epoll.h	/^	static void DoRead(int ep_fd, int fd, char *buf);$/;"	p	class:TestEpoll	access:private	signature:(int ep_fd, int fd, char *buf)
 TestEpoll::DoWrite	test_epoll.cpp	/^void TestEpoll::DoWrite(int ep_fd, int fd, char *buf)$/;"	f	class:TestEpoll	signature:(int ep_fd, int fd, char *buf)
 TestEpoll::DoWrite	test_epoll.h	/^	static void DoWrite(int ep_fd, int fd, char *buf);$/;"	p	class:TestEpoll	access:private	signature:(int ep_fd, int fd, char *buf)
-TestEpoll::HandleEvents	test_epoll.cpp	/^void TestEpoll::HandleEvents(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)$/;"	f	class:TestEpoll	signature:(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)
+TestEpoll::HandleEvents	test_epoll.cpp	/^void TestEpoll::HandleEvents(int ep_fd, epoll_event *events, int nfd, int svr_fd, char *buf)$/;"	f	class:TestEpoll	signature:(int ep_fd, epoll_event *events, int nfd, int svr_fd, char *buf)
 TestEpoll::HandleEvents	test_epoll.h	/^	static void HandleEvents(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf);$/;"	p	class:TestEpoll	access:private	signature:(int ep_fd, epoll_event *events, int num, int svr_fd, char *buf)
 TestEpoll::INFINITE	test_epoll.h	/^	static const int INFINITE = -1;$/;"	m	class:TestEpoll	access:private
 TestEpoll::LISTEN_ENQ	test_epoll.h	/^	static const int LISTEN_ENQ = 5;$/;"	m	class:TestEpoll	access:private
