@@ -141,6 +141,7 @@ void TestEpoll::HandleEvents(int ep_fd, epoll_event *events, int nfd, int svr_fd
 void TestEpoll::DoAccept(int ep_fd, int fd)
 {
 	sockaddr_in conn_addr;
+	//************Rememver to assign sizeof(sockaddr_in) to addrlen, or you will get wrong conn_addr from accept function*************************//
 	socklen_t addrlen = sizeof(sockaddr_in);	
 	int conn_fd;
 	
