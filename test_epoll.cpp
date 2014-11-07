@@ -1,7 +1,5 @@
 #include "test_epoll.h"
-#include "common.h"
 #include <sys/socket.h>
-#include <sys/types.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <stdlib.h>
@@ -46,15 +44,28 @@ void TestEpoll::BeginServer(int argc, char ** argv)
 		exit(1);
 	}
 	int port = atoi(argv[3]);
-	
-	//socket
+
+	//Begin Epoll 
 	int svr_fd = SocketBind("0.0.0.0", port);
-
-	//listen
-	listen(svr_fd, LISTEN_ENQ);
-
-	//do_epoll
+    listen(svr_fd, 20);
 	DoEpoll(svr_fd);
+}
+
+void TestEpoll::SetNonBlocking(int fd)
+{
+	int opts;
+	opts = fcntl(fd, F_GETFL);
+	if(opts<0)
+	{
+		perror("F_GETFL Error!\n");
+		exit(1);
+	}
+	opts = opts | O_NONBLOCK;
+	if(fcntl(fd, F_SETFL, opts)<0)
+	{
+		perror("F_SETFL Error!\n");
+		exit(1);
+	}
 }
 
 int TestEpoll::SocketBind(const char *ip, int port)
@@ -71,7 +82,6 @@ int TestEpoll::SocketBind(const char *ip, int port)
 	bzero(&svr_addr, sizeof(svr_addr));
 	svr_addr.sin_family = AF_INET;
 	inet_pton(AF_INET, ip, &(svr_addr.sin_addr));
-	//svr_addr.sin_addr.s_addr = htons(INADDR_ANY);
 	svr_addr.sin_port = htons(port);
 	if(-1==(bind(svr_fd, (sockaddr*)&svr_addr, sizeof(svr_addr))))
 	{
@@ -81,67 +91,17 @@ int TestEpoll::SocketBind(const char *ip, int port)
 	return svr_fd;
 }
 
-int acpt(int efd, int fd)
-{
-			sockaddr_in cliaddr;
-			socklen_t cliaddrlen;	
-			int client_fd;
-			client_fd = accept(fd, (sockaddr*)&cliaddr, &cliaddrlen);
-			if(-1==client_fd)
-			{
-				perror("Accept Error!\n");
-				exit(1);
-			}
-			printf("New Connection with : %s:%d \n", inet_ntoa(cliaddr.sin_addr), cliaddr.sin_port);
-			return client_fd;
-}
-
-
 void TestEpoll::DoEpoll(int svr_fd)
 {
-	epoll_event events[MAX_EVENTS];
+	epoll_event ev, events[MAX_EVENTS];
 	int ret = 0;
 	char buf[BUF_SIZE] = {0};
 	int	ep_fd = epoll_create(MAX_EVENTS);
 	AddEvent(ep_fd, svr_fd, EPOLLIN);	
-	while(1)
-	{
-		ret = epoll_wait(ep_fd, events, MAX_EVENTS, INFINITE);
-	//	HandleEvents(ep_fd, events, ret, svr_fd, buf);
-	int i;
-	int fd;
-	int num = ret;
-
-	if(num<0)
-	{
-		perror("epoll_wait Error!\n");
-		exit(1);
-	}
-
-	for(i=0;i<num;++i)
-	{
-		fd = events[i].data.fd;
-		if((fd==svr_fd) && (events[i].events & EPOLLIN))
-		{
-		//	DoAccept(ep_fd, fd);
-			int client_fd = acpt(ep_fd, fd);
-			SetNonBlocking(client_fd);
-			AddEvent(ep_fd, client_fd, EPOLLIN);
-		}
-		else if(events[i].events & EPOLLIN)
-		{
-			DoRead(ep_fd, fd, buf);
-		}
-		else if(events[i].events & EPOLLOUT)
-		{
-			DoWrite(ep_fd, fd, buf);
-		}
-		else
-		{
-			perror("Unhandled Event!\n");
-		}
-	}
-	}
+    while(1) {
+        ret = epoll_wait(ep_fd, events, MAX_EVENTS, INFINITE);
+		HandleEvents(ep_fd, events, ret, svr_fd, buf);
+    }
 	close(ep_fd);
 }
 
@@ -161,20 +121,7 @@ void TestEpoll::HandleEvents(int ep_fd, epoll_event *events, int num, int svr_fd
 		fd = events[i].data.fd;
 		if((fd==svr_fd) && (events[i].events & EPOLLIN))
 		{
-			sockaddr_in cliaddr;
-			socklen_t cliaddrlen;	
-			int client_fd;
-
-			while((client_fd = accept(fd, (sockaddr*)&cliaddr, &cliaddrlen))>0)
-			{
-				SetNonBlocking(client_fd);
-				printf("New Connection with : %s:%d \n", inet_ntoa(cliaddr.sin_addr), cliaddr.sin_port);
-				AddEvent(ep_fd, client_fd, EPOLLIN);
-			}
-			if(-1==client_fd)
-			{
-				perror("Accept Error!\n");
-			}
+			DoAccept(ep_fd, fd);
 		}
 		else if(events[i].events & EPOLLIN)
 		{
@@ -193,20 +140,20 @@ void TestEpoll::HandleEvents(int ep_fd, epoll_event *events, int num, int svr_fd
 
 void TestEpoll::DoAccept(int ep_fd, int fd)
 {
-			sockaddr_in cliaddr;
-			socklen_t cliaddrlen;	
-			int client_fd;
-
-			while((client_fd = accept(fd, (sockaddr*)&cliaddr, &cliaddrlen))>0)
-			{
-				SetNonBlocking(client_fd);
-				printf("New Connection with : %s:%d \n", inet_ntoa(cliaddr.sin_addr), cliaddr.sin_port);
-				AddEvent(ep_fd, client_fd, EPOLLIN);
-			}
-			if(-1==client_fd)
-			{
-				perror("Accept Error!\n");
-			}
+	sockaddr_in local, cliaddr;
+	socklen_t cliaddrlen = sizeof(sockaddr_in);	
+	int client_fd;
+	
+	while((client_fd = accept(fd, (sockaddr*)&cliaddr, &cliaddrlen))>0)
+	{
+		SetNonBlocking(client_fd);
+		printf("New Connection with : %s:%d \n", inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+		AddEvent(ep_fd, client_fd, EPOLLIN);
+	}
+	if(-1==client_fd)
+	{
+		perror("Accept Error!\n");
+	}
 }
 
 void TestEpoll::DoRead(int ep_fd, int fd, char *buf)
@@ -276,23 +223,6 @@ void TestEpoll::DeleteEvent(int efd, int fd, int evt)
 void TestEpoll::BeginClient(int argc, char ** argv)
 {
 	printf("TestEpoll BeginClient!\n");
-}
-
-void TestEpoll::SetNonBlocking(int fd)
-{
-	int opts;
-	opts = fcntl(fd, F_GETFL);
-	if(opts<0)
-	{
-		perror("F_GETFL Error!\n");
-		exit(1);
-	}
-	opts = opts | O_NONBLOCK;
-	if(fcntl(fd, F_SETFL, opts)<0)
-	{
-		perror("F_SETFL Error!\n");
-		exit(1);
-	}
 }
 
 
